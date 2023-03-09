@@ -1,0 +1,206 @@
+<--File:edcoder
+<--File:help.txt
+edcoder: A powerful tool for encoding/decoding.
+- edcoder encode [key] [message]: encode the message
+- edcoder decode [key] [message]: decode the message
+<--File:init.py
+from lib import *
+import os
+
+try:
+    getdt("_test")
+except Exception:
+    def setdt(a, b):
+        pass
+    def getdt(a):
+        pass
+    def run_command(a):
+        pass
+    usr = "local"
+    tbl_print("Running in local mode!")
+
+try:
+    import pyperclip
+except Exception:
+    tbl_print("&3mPyperclip isn't installed! auto-coping is disabled.")
+    tbl_print("&3mTo solve this, you need to type 'pip3 install pyperclip' in your terminal/shell to install Pyperclip.")
+<--File:main.py
+from lib import *
+
+try:
+	xdsa = args
+except Exception:
+	args = []
+	usr = ""
+	def setdt(a, b):
+		pass
+	def getdt(a):
+		pass
+	def run_command(a):
+		pass
+	tbl_print("Running in local mode!")
+
+try:
+	import pyperclip
+	autoc = True
+except Exception:
+	autoc = False
+
+def cod(c):
+	return ord(c)-32
+
+def cods(c, s):
+	return (ord(c)-32+s)%95
+
+
+def codd(c, s):
+	return (ord(c)-32-s)%95
+
+if len(args) == 0:
+	args = [tbl_input("&6mmode(e/d): ")]
+	k = tbl_input("&6mkey: ")
+	s = tbl_input("&6mmessage: ")
+elif len(args) == 1:
+	k = tbl_input("&6mkey: ")
+	s = tbl_input("&6mmessage: ")
+elif len(args) == 2:
+	k = args[1]
+	s = tbl_input("&6mmessage: ")
+elif len(args) >= 3:
+	k = args[1]
+	s = " ".join(args[2:])
+bb = False
+for i in s:
+	if ord(i)>128:
+		tbl_print(f"&1mIllegal character: {i}&7m!")
+		bb = True
+		break
+if bb:
+	pass
+elif args[0] in ["e", "encode"]:
+	ans = ""
+	for i in range(len(s)):
+		nans = ""
+		for j in ans:
+			nans += chr(cods(j, cod(s[i])) + 32)
+		ans = nans + chr(cods(s[i], cod(k[i % len(k)])) + 32)
+	tbl_print(f"&4m{ans}")
+	if autoc:
+		tbl_print("&2mcopied to clipboard&7m!")
+		pyperclip.copy(ans)
+elif args[0] in ["d", "decode"]:
+	ans = list(s)
+	for i in range(len(ans) - 1, -1, -1):
+		ans[i] = chr(codd(ans[i], cod(k[i % len(k)])) + 32)
+		for j in range(i):
+			ans[j] = chr(codd(ans[j], cod(ans[i])) + 32)
+	ans = "".join(ans)
+	tbl_print(f"&4m{ans}")
+	if autoc:
+		tbl_print("&2mcopied to clipboard&7m!")
+		pyperclip.copy(ans)
+else:
+	tbl_print("&1mError: Unknown command&7m!")
+
+<--File:help.txt
+edcoder: A powerful tool for encoding/decoding.
+- edcoder encode [key] [message]: encode the message
+- edcoder decode [key] [message]: decode the message
+<--File:init.py
+from lib import *
+import os
+
+try:
+    getdt("_test")
+except Exception:
+    def setdt(a, b):
+        pass
+    def getdt(a):
+        pass
+    def run_command(a):
+        pass
+    usr = "local"
+    tbl_print("Running in local mode!")
+
+try:
+    import pyperclip
+except Exception:
+    tbl_print("&3mPyperclip isn't installed! auto-coping is disabled.")
+    tbl_print("&3mTo solve this, you need to type 'pip3 install pyperclip' in your terminal/shell to install Pyperclip.")
+<--File:main.py
+from lib import *
+
+try:
+	xdsa = args
+except Exception:
+	args = []
+	usr = ""
+	def setdt(a, b):
+		pass
+	def getdt(a):
+		pass
+	def run_command(a):
+		pass
+	tbl_print("Running in local mode!")
+
+try:
+	import pyperclip
+	autoc = True
+except Exception:
+	autoc = False
+
+def cod(c):
+	return ord(c)-32
+
+def cods(c, s):
+	return (ord(c)-32+s)%95
+
+
+def codd(c, s):
+	return (ord(c)-32-s)%95
+
+if len(args) == 0:
+	args = [tbl_input("&6mmode(e/d): ")]
+	k = tbl_input("&6mkey: ")
+	s = tbl_input("&6mmessage: ")
+elif len(args) == 1:
+	k = tbl_input("&6mkey: ")
+	s = tbl_input("&6mmessage: ")
+elif len(args) == 2:
+	k = args[1]
+	s = tbl_input("&6mmessage: ")
+elif len(args) >= 3:
+	k = args[1]
+	s = " ".join(args[2:])
+bb = False
+for i in s:
+	if ord(i)>128:
+		tbl_print(f"&1mIllegal character: {i}&7m!")
+		bb = True
+		break
+if bb:
+	pass
+elif args[0] in ["e", "encode"]:
+	ans = ""
+	for i in range(len(s)):
+		nans = ""
+		for j in ans:
+			nans += chr(cods(j, cod(s[i])) + 32)
+		ans = nans + chr(cods(s[i], cod(k[i % len(k)])) + 32)
+	tbl_print(f"&4m{ans}")
+	if autoc:
+		tbl_print("&2mcopied to clipboard&7m!")
+		pyperclip.copy(ans)
+elif args[0] in ["d", "decode"]:
+	ans = list(s)
+	for i in range(len(ans) - 1, -1, -1):
+		ans[i] = chr(codd(ans[i], cod(k[i % len(k)])) + 32)
+		for j in range(i):
+			ans[j] = chr(codd(ans[j], cod(ans[i])) + 32)
+	ans = "".join(ans)
+	tbl_print(f"&4m{ans}")
+	if autoc:
+		tbl_print("&2mcopied to clipboard&7m!")
+		pyperclip.copy(ans)
+else:
+	tbl_print("&1mError: Unknown command&7m!")
